@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        table, th, td {
+  border: 0px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 15px;
+}
+    </style>
+    <title>form</title>
+</head>
+<body style="margin: 40px; ">
+
+    <form action="#" method="get">
+        <table border="0" style="width: 50%; " align="center">
+            <colgroup>
+                <col span="1" style="background-color: #D6EEEE">
+              </colgroup>
+              <colgroup>
+                <col span="2" style="background-color: #b7e7f0">
+              </colgroup>
+            <tr>
+                <th colspan="2"><h2>회원가입</h2></th>
+            </tr>
+                <th><label for="nickname">사용자 ID&#40;&#42;&#41;</label></th>
+                <th><input type="text" name="nickname" id="nickname" placeholder="닉네임을 입력하세요" autofocus required></th><br><br>
+            <tr>    
+                <th><label for="pwd">패스워드&#40;&#42;&#41;</label></th>
+                <th><input type="password" name="pwd" id="pwd" placeholder="&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;" required></th><br><br>
+            </tr>
+                <th><label for="pwd">패스워드 확인&#40;&#42;&#41;</label></th>
+                <th><input type="password" name="pwd" id="pwd" placeholder="&#42;&#42;&#42;&#42;&#42;&#42;&#42;&#42;" required></th><br><br>
+            <tr>
+                <th><label for="uname">이름&#40;&#42;&#41;</label></th>
+                <th><input type="text" name="uname" id="uname" placeholder="이름을 입력하세요" required></th><br><br>
+            </tr>
+                <th><label for="gender">성별&#40;&#42;&#41;</label></th>
+                <th>
+                    <input type="radio" id="male" name="fav_language" value="male">
+                    <label for="male">남자</label>
+                    <input type="radio" id="female" name="fav_language" value="female">
+                    <label for="female">여자</label><br>
+                </th>
+            <tr>
+                <th><label for="email">이메일&#40;&#42;&#41;</label></th>
+                <th><input type="email" name="email" id="email" placeholder="이메일을 입력하세요"></th><br><br>
+            </tr>
+                <th><label for="tel">전화번호</label></th>
+                <th><input type="tel" id="tel" value="010"></th>
+            <tr>
+                <th><label for="intro">자기소개</label></th>
+                <th><textarea name="intro" id="intro" rows="5" cols="22.5"></textarea></th><br><br>
+            </tr>
+                <th colspan="2"><input type="submit" value="제출">
+                <input type="reset" value="취소"></th>
+            </tr>
+        </table>
+    </form>
+    </table>
+</body>
+</html>
