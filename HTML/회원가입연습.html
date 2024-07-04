@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입</title>
+    <script src="https://kit.fontawesome.com/c78c7fcb6c.js" crossorigin="anonymous"></script>
     <style>
         body{
             background-color: #f0f0f0;
@@ -48,6 +49,9 @@
         .form-group submit-button{
             text-align: center;
         }
+        i{
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -56,38 +60,38 @@
         <h2>회원가입</h2>
         <form action="#" method="post">
             <div class="form-group">
-                <label for="userid">사용자ID*</label>
+                <label for="userid"><i class="fa-solid fa-id-badge"></i>사용자ID*</label>
                 <input type="text" id="userid" name="userid" required>
             </div>
             <div class="form-group">
-                <label for="password">패스워드*</label>
+                <label for="password"><i class="fa-solid fa-lock"></i>패스워드*</label>
                 <input type="password" id="password" name="password" required>
             </div>
             <div class="form-group">
-                <label for="confirm_password">패스워드 확인*</label>
+                <label for="confirm_password"><i class="fa-solid fa-lock"></i>패스워드 확인*</label>
                 <input type="password" id="confirm_password" name="confirm_password" required>
             </div>
             <div class="form-group">
-                <label for="name">이름*</label>
+                <label for="name"><i class="fa-solid fa-file-signature"></i>이름*</label>
                 <input type="text" id="name" name="name" required>
             </div>
             <div class="form-group">
-                <label for="gender">성별*</label>
+                <label for="gender"><i class="fa-solid fa-person-half-dress"></i>성별*</label>
                 <div class="gender-options">
                     <label><input type="radio" name="gender" value="남">남</label>
                     <label><input type="radio" name="gender" value="남">여</label>
                 </div>
             </div>
             <div class="form-group">
-                <label for="email">이메일</label>
+                <label for="email"><i class="fa-solid fa-envelope"></i>이메일</label>
                 <input type="email" id="email" name="email" required>
             </div>
             <div class="form-group">
-                <label for="phone">전화번호</label>
+                <label for="phone"><i class="fa-solid fa-phone"></i>전화번호</label>
                 <input type="text" id="phone" name="phone">
             </div>
             <div class="form-group">
-                <label for="int">자기소개</label>
+                <label for="int"><i class="fa-solid fa-message"></i>자기소개</label>
                 <textarea name="int" id="int"></textarea>
             </div>
             <div class="form-group submit-button">
