@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selector</title>
+    <style>
+        *{font-family: cursive;}
+        p, h1, h2{text-align: center; color: red;font-size: larger;}
+        #para1{text-align: center; color: red;}
+        .center{text-align: center; color: red;}
+        div > p{text-align: center; color: blue;}
+    </style>
+</head>
+<body>
+    <h1 id="para1"> 아이디 적용 para1</h1>
+    <p>CSS 적용</p>
+    <p class="center">클래스 적용</p>
+    <h2>H2 스타일 적용</h2>
+    <div>
+        <p> DIV 하위 P 적용</p>
+        <section>
+            <p>div밑에 section밑에 p</p>
+        </section>
+    </div>
+</body>
+</html>
