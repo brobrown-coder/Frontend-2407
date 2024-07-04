@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <style>
+        body{
+            background-color: #f0f0f0;
+        }
+        .container{
+            max-width: 600px;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px wheat(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group .gender-options {
+            margin-top: 5px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group input[type="email"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .form-group textarea{
+            resize: vertical;
+            height: 100px;
+        }
+        .form-group submit-button{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://picsum.photos/1000/120" alt="배경화면" width="100%">
+    <div class="container">
+        <h2>회원가입</h2>
+        <form action="#" method="post">
+            <div class="form-group">
+                <label for="userid">사용자ID*</label>
+                <input type="text" id="userid" name="userid" required>
+            </div>
+            <div class="form-group">
+                <label for="password">패스워드*</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">패스워드 확인*</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <div class="form-group">
+                <label for="name">이름*</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">성별*</label>
+                <div class="gender-options">
+                    <label><input type="radio" name="gender" value="남">남</label>
+                    <label><input type="radio" name="gender" value="남">여</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">전화번호</label>
+                <input type="text" id="phone" name="phone">
+            </div>
+            <div class="form-group">
+                <label for="int">자기소개</label>
+                <textarea name="int" id="int"></textarea>
+            </div>
+            <div class="form-group submit-button">
+                <button type="submit">가입하기</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
