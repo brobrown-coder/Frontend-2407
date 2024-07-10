@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fixed Navbar Example</title>
+  <!-- Bootstrap CSS 파일 -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- 여기에 적절한 스타일 시트를 추가 -->
+  <style>
+    /* 추가적인 스타일이 필요하다면 여기에 추가 */
+  </style>
+</head>
+<body>
+  <!-- 네비게이션 바 (fixed-top 클래스 추가) -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Another Link</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 페이지 내용 -->
+  <div class="container-fluid mt-5" style="background-color: #795548; height: 200px;">
+    <h1 class="p-3 text-white">Content Below Fixed Navbar</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non libero nec purus condimentum hendrerit. Proin ultricies, odio sed fringilla sagittis, tortor velit feugiat dolor, in euismod turpis urna sed nisi. Mauris nec bibendum nisi.</p>
+  </div>
+
+  <!-- Bootstrap 자바스크립트 파일 (필수) -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>
