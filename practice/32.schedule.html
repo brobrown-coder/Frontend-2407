@@ -91,7 +91,7 @@
           </div>
           <div><a href="#"><i class="fa-solid fa-square-plus"></i> 기념일</a></div>
         </div>
-        <table class="table table-bordered mt-3">
+        <table class="table table-bordered mt-3" data-bs-toggle="modal" data-bs-target="#myModal">
           <tr class="table-secondary">
             <th class="text-danger">일</th>
             <th>월</th><th>화</th><th>수</th><th>목</th><th>금</th>
@@ -348,13 +348,13 @@
                 <label for="title">제목</label>
                 <input type="checkbox" class="form-check-input ms-5" id="check1" name="check" value="val1" checked>
                 <label for="check1" class="form-check-label">중요</label>
-                <input type="text" class="form-control" name="title" id="title">
+                <input type="text" class="form-control" name="title" id="title" required>
               </div>
             </div>
             <div class="row mt-2">
               <div class="col-8">
                 <label for="date1">시작일</label>
-                <input type="date" class="form-control" id="date1" value="2024-07-08">
+                <input type="date" class="form-control" id="date1" value="">
               </div>
               <div class="col-4">
                 <label for="time1">시작시간</label>
