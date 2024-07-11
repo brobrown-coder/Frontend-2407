@@ -21,7 +21,7 @@
     <div class="container-fluid">
       <ul class="navbar-nav">
         <a class="navbar-brand mx-5" href="#">
-          <img src="img/logo.png" alt="" style="height: 36px;">
+          <img src="img/logo.jpg" alt="" style="height: 36px;">
         </a>
         <li class="nav-item">
           <a class="nav-link ms-3" href="#section1"><i class="fa-solid fa-building"></i> Company</a>
@@ -40,7 +40,7 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link ms-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-            <i class="fa-solid fa-brain"></i> 인공지능</a>
+            <i class="fa-solid fa-key"></i> 관리</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Normal</a></li>
             <li><a class="dropdown-item active" href="#">Active</a></li>
@@ -63,11 +63,18 @@
 
   <!-- company -->
   <div id="section1" class="container-fluid text-white" style="padding:100px 20px; height: 1200px; background-color: #795548;">
-    <h1>Section 1</h1>
-    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll 
-      this section and look at the navigation bar while scrolling!</p>
-    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll 
-      this section and look at the navigation bar while scrolling!</p>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="p-5 text-center my-5">
+            <h1><b>My First Bootstrap Page</b></h1>
+            <p>BroBrown</p>
+            <button class="btn btn-primary">Primary</button>
+            <button class="btn btn-success">Success</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- It's me -->
@@ -75,59 +82,76 @@
     <div class="row">
       <div class="col-2"></div>
       <div class="col-8">
-        <div class="container">
+        <div class="row">
           <h1>It'me</h1>
+          <div class="col">
+            <div class="container">
+              
 
-          <!-- Carousel -->
-          <div id="demo" class="carousel slide mt-5" data-bs-ride="carousel">
+              <!-- Carousel -->
+              <div id="demo" class="carousel slide mt-5" data-bs-ride="carousel">
 
-            <!-- Indicators/dots -->
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-              <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-              <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                <!-- Indicators/dots -->
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                  <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                  <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                </div>
+                
+                <!-- The slideshow/carousel -->
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="img/pic1.jpg" alt="Los Angeles" class="d-block rounded" style="width:100%">
+                    <div class="carousel-caption">
+                      <h3>Kimjae</h3>
+                      <p>We had such a great time in Kimjae!</p>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <img src="img/pic2.jpg" alt="Chicago" class="d-block rounded" style="width:100%">
+                    <div class="carousel-caption">
+                      <h3>Oops! bighead</h3>
+                      <p>Sry too big</p>
+                    </div> 
+                  </div>
+                  <div class="carousel-item">
+                    <img src="img/pic3.jpg" alt="New York" class="d-block rounded" style="width:100%">
+                    <div class="carousel-caption">
+                      <h3>Maybe... Busan?</h3>
+                      <p>Where are you looking</p>
+                    </div>  
+                  </div>
+                </div>
+                
+                <!-- Left and right controls/icons -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                  <span class="carousel-control-next-icon"></span>
+                </button>
+              </div>
+
+              <div class="container-fluid mt-3">
+                <h3>백승헌 입니다</h3>
+                <p>만나서 반갑습니다</p>
+                <p>다같이 좋은 결실을 맺읍시다!!</p>
+              </div>
+              
+
             </div>
-            
-            <!-- The slideshow/carousel -->
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="img/pic1.jpg" alt="Los Angeles" class="d-block" style="width:100%">
-                <div class="carousel-caption">
-                  <h3>Los Angeles</h3>
-                  <p>We had such a great time in LA!</p>
+          </div>
+          <div class="col">
+            <div class="container mt-5">
+              <div class="card shadow p-4 mb-4 bg-white" style="width: 400px;">
+                <img src="img/avatar_body.jpg" alt="">
+                <div class="card-body">
+                  <h5 class="card-title"><b>백승헌</b></h5>
+                  <p class="card-text">87년생 / 수원거주 / 본가전주 / 개발경험 무</p>
                 </div>
               </div>
-              <div class="carousel-item">
-                <img src="img/pic2.jpg" alt="Chicago" class="d-block" style="width:100%">
-                <div class="carousel-caption">
-                  <h3>Chicago</h3>
-                  <p>Thank you, Chicago!</p>
-                </div> 
-              </div>
-              <div class="carousel-item">
-                <img src="img/pic3.jpg" alt="New York" class="d-block" style="width:100%">
-                <div class="carousel-caption">
-                  <h3>New York</h3>
-                  <p>We love the Big Apple!</p>
-                </div>  
-              </div>
             </div>
-            
-            <!-- Left and right controls/icons -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-            </button>
           </div>
-
-          <div class="container-fluid mt-3">
-            <h3>Carousel Example</h3>
-            <p>The following example shows how to create a basic carousel with indicators and controls.</p>
-          </div>
-          
-
         </div>
       </div>
       <div class="col-2"></div>
@@ -136,11 +160,48 @@
   
   <!-- hobby -->
   <div id="section3" class="container-fluid bg-primary text-white" style="padding:100px 20px; height: 1200px;">
-    <h1>Section 3</h1>
-    <p>Try to scroll this section and look at the navigation bar while scrolling! Try 
-      to scroll this section and look at the navigation bar while scrolling!</p>
-    <p>Try to scroll this section and look at the navigation bar while scrolling! Try 
-      to scroll this section and look at the navigation bar while scrolling!</p>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <div class="row">
+          <h1>Hobby</h1>
+          <div class="col">
+            <div class="container mt-5">
+              <div class="card shadow p-4 mb-4 bg-white" style="width: 300px; height: 500px;">
+                <img src="img/steam.jpg" alt="">
+                <div class="card-body">
+                  <h5 class="card-title"><b>Game</b></h5>
+                  <p class="card-text">steam / blizzard</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="container mt-5">
+              <div class="card shadow p-4 mb-4 bg-white" style="width: 300px; height: 500px;">
+                <img src="img/camp.jpg" alt="">
+                <div class="card-body">
+                  <h5 class="card-title"><b>Camp</b></h5>
+                  <p class="card-text">차박 / 노지캠핑 </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="container mt-5">
+              <div class="card shadow p-4 mb-4 bg-white" style="width: 300px; height: 500px;">
+                <img src="img/drive.jpg" alt="">
+                <div class="card-body">
+                  <h5 class="card-title"><b>Driving</b></h5>
+                  <p class="card-text">야간주행 / 빗길주행</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-2"></div>
+    </div>
   </div>
 
 
@@ -400,8 +461,8 @@
   <!-- 네비게이션 밑 고정 -->
   <nav class="navbar navbar-expand-sm bg-dark fixed-bottom">
     <div class="container-fluid justify-content-center">
-      <span class="navbar-text text-secondary">
-        Copyright &copy; 2021-2024 SH World Corp. All right reserved.
+      <span class="navbar-text text-secondary"><i class="fa-brands fa-html5 me-2"></i><i class="fa-brands fa-css3-alt me-2"></i><i class="fa-brands fa-bootstrap me-2"></i>
+        Copyright &copy; 2021-2024 SH World Corp. All right reserved.<i class="fa-brands fa-youtube ms-2"></i><i class="fa-brands fa-battle-net ms-2"></i><i class="fa-brands fa-steam ms-2"></i>
       </span>
     </div>
   </nav>
