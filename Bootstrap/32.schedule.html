@@ -10,7 +10,7 @@
   <script src="https://kit.fontawesome.com/c78c7fcb6c.js" crossorigin="anonymous"></script>
   <style>
     * {font-family: 'Noto Sans KR', sans-serif; }
-    a {text-decoration: none;}
+    a {text-decoration: none; columns: inherit;}
     th { text-align: center; width: 14.28%; }
 		td { height: 120px; }
   </style>
@@ -328,5 +328,73 @@
       </span>
     </div>
   </nav>
+  
+  <!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h5 class="modal-title">일정 추가</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form action="/" method="get">
+            <div class="row">
+              <div class="col">
+                <label for="title">제목</label>
+                <input type="checkbox" class="form-check-input ms-5" id="check1" name="check" value="val1" checked>
+                <label for="check1" class="form-check-label">중요</label>
+                <input type="text" class="form-control" name="title" id="title">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-8">
+                <label for="date1">시작일</label>
+                <input type="date" class="form-control" id="date1" value="2024-07-08">
+              </div>
+              <div class="col-4">
+                <label for="time1">시작시간</label>
+                <input type="time" class="form-control" id="time1" value="12:00">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-8">
+                <label for="date2">종료일</label>
+                <input type="date" class="form-control" id="date2" value="2024-07-08">
+              </div>
+              <div class="col-4">
+                <label for="time2">종료시간</label>
+                <input type="time" class="form-control" id="time2" value="13:00">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="pos">장소</label>
+                <input type="text" class="form-control" id="pos" value="집" disabled>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="memo">메모</label>
+                <input type="text" class="form-control" id="memo" value="멘토분들과 식사">
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary me-2" >제출</button>
+          <button type="redet" class="btn btn-secondary" data-bs-dismiss="modal">종료</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- 모달 끝부분 -->
 </body>
 </html>
