@@ -1,6 +1,6 @@
 // 생년월일에 따른 나이 계산
 
-const bY = 1987, bM = 1, bD = 19;
+const bY = 1987, bM = 7, bD = 19;
 const today = new Date();
 let tY = today.getFullYear();
 let tM = today.getMonth() + 1;      // 자바는 Month에 +1 해줘야함
@@ -11,7 +11,7 @@ let age = 0;
 
 let age2 ='';
 
-if (bM = tM){
+if (bM === tM){
     age2 = bD <= tD ? tY - bY -1 : tY - bY;
 }
 else {
