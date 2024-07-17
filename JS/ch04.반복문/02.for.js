@@ -67,3 +67,4 @@ for (let hour = 0; hour <= 23; hour++){
     }
 }
 console.log(sumMinute);
+
