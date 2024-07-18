@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사분면</title>
+    <style>
+        input, btn {
+            padding: 5px;
+        }
+    </style>
+    <script>
+        function test(){
+            let n ='';
+            let xX = Number(document.getElementById('xValue').value);
+            let yY = Number(document.getElementById('yValue').value);
+            if (xX > 0 && yY > 0)
+                n = '제1사분면';
+            else if (xX > 0 && yY < 0)
+                n = '제4사분면';
+            else if (xX < 0 && yY >0)
+                n = '제2사분면';
+            else if (xX < 0 && yY <0)
+                n = '제3사분면';
+            else
+                n = '좌표축'
+            document.getElementById('result').innerHTML = `${xX},${yY}는 ${n} 입니다.`
+        }
+    </script>
+</head>
+<body style="margin: 40px;">
+    <h3>사분면</h3>
+    <hr>
+        <input type="text" id="xValue" placeholder="양수 또는 음수의 정수를 입력하세요.">
+        <input type="text" id="yValue" placeholder="양수 또는 음수의 정수를 입력하세요.">
+        <button onclick="test()">확인</button>
+    <hr>
+        <div id="result"></div>
+</body>
+</html>

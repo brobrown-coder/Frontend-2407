@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주사위 게임</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        #dice-results {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>주사위 게임</h2>
+    <button onclick="playGame()">주사위 굴리기</button>
+    <div id="dice-results"></div>
+
+    <script>
+        function playGame() {
+            // 주사위 던지기
+            let dice1 = Math.ceil(Math.random() * 6);
+            let dice2 = Math.ceil(Math.random() * 6);
+            let dice3 = Math.ceil(Math.random() * 6);
+
+            // 결과 출력
+            let resultElement = document.getElementById('dice-results');
+            resultElement.innerHTML = `
+                <p>첫 번째 주사위: ${dice1}</p>
+                <p>두 번째 주사위: ${dice2}</p>
+                <p>세 번째 주사위: ${dice3}</p>
+            `;
+
+            let prize = 0;
+
+            // 상금 계산
+            if (dice1 == dice2 && dice2 == dice3) {
+                prize = 10000 + 1000 * dice1;
+            } else if (dice1 == dice2) {
+                prize = 1000 + 100 * dice1;
+            } else if (dice2 == dice3) {
+                prize = 1000 + 100 * dice2;
+            } else if (dice1 == dice3) {
+                prize = 1000 + 100 * dice1;
+            } else {
+                let maxDice = Math.max(dice1, dice2, dice3);
+                prize = 100 * maxDice;
+            }
+
+            // 최종 결과 출력
+            resultElement.innerHTML += `<p>총 상금: ${prize}원</p>`;
+        }
+    </script>
+</body>
+</html>
+

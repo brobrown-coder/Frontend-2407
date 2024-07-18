@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나이계산</title>
+    <style>
+        input, button {
+          padding:  5px;  
+        }
+    </style>
+    <script>
+        function calcYear() {
+            let today = new Date();
+            let tY = today.getFullYear();
+            let tM = today.getMonth() + 1;
+            let tD = today.getDate();
+            let bY = Number(document.getElementById('birthYear').value);
+            let bM = Number(document.getElementById('birthMonth').value);
+            let bD = Number(document.getElementById('birthDay').value);
+            let age = 0;
+                if (bM === tM){
+                    age = bD <= tD ? tY - bY -1 : tY - bY;
+                }
+                else {
+                    age = bM <  tM ? tY - bY -1 : tY - bY; 
+                }
+            document.getElementById('result').innerHTML = `현재나이는 ${age}입니다`;
+        }
+    </script>
+</head>
+<body style="margin: 40px;">
+    <h3>나이 계산기</h3>
+    <hr>
+    <input type="text" id="birthYear" placeholder="태어난 해를 적어주세요">
+    <input type="text" id="birthMonth" placeholder="태어난 달을 적어주세요">
+    <input type="text" id="birthDay" placeholder="태어난 날을 적어주세요">
+    <hr>
+    <button onclick="calcYear()">확인</button>
+    <hr>
+    <div id="result"></div>
+</body>
+</html>
