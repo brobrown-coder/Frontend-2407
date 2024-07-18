@@ -14,7 +14,7 @@ function isPrimeNumber(num) {
             return false;
     }
     // for (let i = 2; i < num; i++){
-    //     if(nun % 1 == 0)
+    //     if(num % 1 == 0)
     //         return false;
     // }
     return true;
