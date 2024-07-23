@@ -3,29 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>디지털 시계(그래픽 버전)</title>
+    <title>Watch</title>
     <style>
         img {
             width: 100px;
         }
     </style>
+
     <script>
-        let now = new Date();
-        let hour = now.getHours();
-        let minute = now.getMinutes();
-        let second = now.getSeconds();
-        
+        window.onload = () => {
+            const today = document.getElementById('today');
+            const time = document.getElementById('time');
+            
+            function twoDigit(num) {
+                return num < 10 ? "0" + num : num
+            };
+            
+            function getTime() {
+                let now = new Date();
+                return `${twoDigit(now.getHours())}:${twoDigit(now.getMinutes())}:${twoDigit(now.getSeconds())}`;
+            };
+            
+            function getDate() {
+                const week = '일월화수목금토'.split('');
+                let nowD = new Date();
+                return `${nowD.getFullYear()}-${twoDigit(nowD.getMonth() + 1)}-${twoDigit(nowD.getDate())}-${week[nowD.getDay()]}`;
+            }
+
+            today.textContent = getDate();
+            time.textContent = getTime();
+
+            setInterval(() => {
+                let timerStr = getTime();
+                document.getElementById('h1').src = `img/${timerStr[0]}.svg`
+                document.getElementById('h2').src = `img/${timerStr[1]}.svg`
+                document.getElementById('m1').src = `img/${timerStr[3]}.svg`
+                document.getElementById('m2').src = `img/${timerStr[4]}.svg`
+                document.getElementById('s1').src = `img/${timerStr[6]}.svg`
+                document.getElementById('s2').src = `img/${timerStr[7]}.svg`
+
+                time.textContent = getTime();
+            }, 1000);
+
+        };
     </script>
 </head>
 <body style="margin: 40px;">
-    <h1 id="display"></h1>
+    <div id="today"></div>
+    <div id="time"></div>
     <img id="h1">
     <img id="h2">
     <img src="img/Colon.jpg">
     <img id="m1">
-    <img id="m1">
+    <img id="m2">
     <img src="img/Colon.jpg">
     <img id="s1">
     <img id="s2">
-</body2
+</body>
 </html>
