@@ -15,9 +15,9 @@
         }
         function myDate(now) {
             const week = '일월화수목금토'.split('');
-            return `${now.getFullYear()}-${twoDigit(now.getMonth() + 1)}-${twoDigit(now.getDate())(week[now.getDay])}`
+            return `${now.getFullYear()}-${twoDigit(now.getMonth() + 1)}-${twoDigit(now.getDate())(week[now.getDay()])}`
         }
-        
+
         window.onload = () => {
             setInterval(() => {
                 let now = new Date();
