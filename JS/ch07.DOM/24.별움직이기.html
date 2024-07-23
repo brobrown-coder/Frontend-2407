@@ -9,12 +9,34 @@
             const star = document.querySelector('h1');
             star.style.position = 'absolute';
 
+            // 별 출력
             let [x, y] = [0, 0];
+            const block = 30;
+            const print = () => {
+                star.style.left = `${x * block}px`;
+                star.style.top = `${y * block}px`;
+            }     
+            print();
             
+            //별이동
+            const [left, up, right, down] = [37, 38, 39, 40];
+            document.body.addEventListener('keydown',(event) => {
+                switch(event.keyCode){
+                case left:
+                    x -= 1; break;
+                case up:
+                    y -= 1; break;
+                case right:
+                    x++; break;
+                case down:
+                    y++;
+                }
+                print();
+            });
         };
     </script>
 </head>
-<body style="margin: 40px;">
+<body>
     <h1>★</h1>
 </body>
 </html>
