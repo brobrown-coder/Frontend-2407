@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigator 객체</title>
+    <script>
+        window.onload = () => {
+            let attr = `appCodeName: ${navigator.appCodeName}<br>`;
+            attr += `appName: ${navigator.appName}<br>`;
+            attr += `appVersion: ${navigator.appVersion}<br>`;
+            attr += `platform: ${navigator.platform}<br>`;
+            attr += `userAgent: ${navigator.userAgent}<br>`;
+            document.querySelector('h3').innerHTML = attr
+
+            // appCodeName: Mozilla
+            // appName: Netscape
+            // appVersion: 5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0
+            // platform: Win32      **현실적으로 중요한 정보**
+            // userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0
+            
+        };
+    </script>
+</head>
+<body style="margin: 40px;">
+    <h3></h3>
+</body>
+</html>
