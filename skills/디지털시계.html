@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디지털 시계 (백승헌)</title>
+    <style>
+        img { width: 50px; };
+        span {font-size: 50px;}
+    </style>
+    <script>
+        function twoDigit(num) {        // 숫자 두자리 만드는 함수
+            return num < 10 ? '0' + num : String(num);
+        }
+        function myDate(now) {              // 날짜 출력 함수
+            const week = '일월화수목금토'.split('');
+            return `${now.getFullYear()}-${twoDigit(now.getMonth() + 1)}-${twoDigit(now.getDate())}(${week[now.getDay() % 7]})`;
+        }
+        function myTime(now) {          // 시간 출력함수
+            return `${twoDigit(now.getHours())}:${twoDigit(now.getMinutes())}:${twoDigit(now.getSeconds())}`;
+        }
+        function imgUp(imgId, imgLocation){     // 이미지 매칭 함수
+            document.getElementById(imgId).src = `img/${imgLocation}.svg`;
+        }
+        
+        window.onload = () => {
+            setInterval(() => {
+                let now = new Date();
+                let dateStr = myDate(now);
+                let timeStr = myTime(now);
+
+                imgUp('y1', dateStr[0]);
+                imgUp('y2', dateStr[1]);
+                imgUp('y3', dateStr[2]);
+                imgUp('y4', dateStr[3]);
+                imgUp('mth1', dateStr[5]);
+                imgUp('mth2', dateStr[6]);
+                imgUp('d1', dateStr[8]);
+                imgUp('d2', dateStr[9]);
+                document.getElementById('day').innerHTML = `(${dateStr[11]})`;
+    
+                imgUp('h1', timeStr[0]);
+                imgUp('h2', timeStr[1]);
+                imgUp('m1', timeStr[3]);
+                imgUp('m2', timeStr[4]);
+                imgUp('s1', timeStr[6]);
+                imgUp('s2', timeStr[7]);
+
+            }, 1000);
+        }
+    </script>
+</head>
+<body style="margin: 40px;">
+    <!-- 날짜 -->
+    <img id="y1">
+    <img id="y2">
+    <img id="y3">
+    <img id="y4">
+    <span>년</span>
+    <img id="mth1">
+    <img id="mth2">
+    <span>월</span>
+    <img id="d1">
+    <img id="d2">
+    <span>일</span>
+    <span id="day"></span>
+    <hr><br>
+    <!-- 시간 -->
+    <img id="h1">
+    <img id="h2">
+    <img src="img/Colon.jpg">
+    <img id="m1">
+    <img id="m2">
+    <img src="img/Colon.jpg">
+    <img id="s1">
+    <img id="s2">
+</body>
+</html>
