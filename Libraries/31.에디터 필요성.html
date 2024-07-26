@@ -14,36 +14,44 @@
         a { text-decoration: none; color: inherit; }
     </style>
     <script>
-        $(document).ready(() => {
-            $('#date').on('change', () => {
-                $('#result').text($('#date').val());
-            });
-        });
+       function show() {
+        let content = $('#content').val();
+        let changedContent = '';
+        for (let i = 0; i < content.length; i++){
+            if (content.charAt(i) === '\n')
+                changedContent += '<br>';
+            else
+                changedContent += content.charAt(i);
+        }
+        $('#result').html(changedContent);
+        $('#update').val(content);
+        $('#readonly').val(content);
+       }
     </script>
 </head>
 <body>
     <div class="container-fluid p-4 bg-primary text-white text-center fixed-top">
-		<h1>여러가지 라이브러리 섞어 쓰기</h1>
-        <p>Bootstrap, 한글 폰트, 아이콘(fontawesome), jQuery</p>
+		<h1>에디터의 필요성</h1>
+        <p>textarea의 한계</p>
 	</div>
 
     <div class="container" style="margin-top: 200px;">
         <div class="row">
-            <div class="col-4"></div>
-            <div class="col-4">
-                <a href="#"><i class="fa-solid fa-calendar-days"></i> 데이트 타입</a><br>
-                <input type="date" class="form-control" id="date">
-                <br>
-                <a href="#"><i class="fa-regular fa-clock"></i> 데이트타임 타입</a><br>
-                <input type="datetime-local" class="form-control">
-                <br>
-                <a href="#"><i class="fa-regular fa-file"></i> 파일 타입</a><br>
-                <input type="file" class="form-control"><br>
-                <input type="file" class="form-control" multiple>
-                <hr>
-                <p id="result"></p>
+            <div class="col-3"></div>
+            <div class="col-6">
+               <textarea id="content" rows="5" class="form-control"></textarea>
+               <button class="btn btn-primary mx-auto mt-3" onclick="show()">확인</button>
+               <hr>
+               <p>글 읽기</p>
+               <p id="result"></p>
+               <hr>
+               <p>글 수정</p>
+               <textarea id="update" rows="5" class="form-control"></textarea>
+               <hr>
+               <p>읽기 전용</p>
+               <textarea id="readonly" rows="5" class="form-control" readonly></textarea>
             </div>
-            <div class="col-4"></div>
+            <div class="col-3"></div>
         </div>
     </div>
 </body>
