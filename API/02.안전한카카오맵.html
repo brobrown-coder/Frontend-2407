@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>카카오 맵</title>
-    <!-- <script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=나의 Javesscript Key"></script> -->
+    <!-- <script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=나의 Javascript Key"></script> -->
     <script src="key.js"></script>
     <script>
         window.onload = () => {
@@ -15,20 +15,19 @@
                     initializeMap();
                 });
             };
-            document.head.appendChild(kakaoSctipt);
-        } 
+            document.head.appendChild(kakaoScript);
+        }
         function initializeMap() {
-            let container = document.getElementById('map');
-            let options = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667),
-                level: 3
+            let container = document.getElementById('map'); 
+            let options = { 
+                center: new kakao.maps.LatLng(33.450701, 126.570667), 
+                level: 3 
             };
-            
-            let map = new kakao.maps.Map(container, options);
-        };
+            let map = new kakao.maps.Map(container, options); 
+        }
     </script>
 </head>
 <body style="margin: 40px;">
-    <div id="map" style="width:600px;height:400px;"></div>
+    <div id="map" style="width:600px; height:400px;"></div>
 </body>
 </html>
