@@ -1,2 +1,5 @@
 # Key file 못올리게 방지
 key.js
+
+# directory 못올리게 방지
+/dir
