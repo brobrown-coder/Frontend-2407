@@ -11,20 +11,27 @@
             const kakaoScript = document.createElement('script');
             kakaoScript.src = `http://dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoJsKey}&autoload=false`;
             kakaoScript.onload = () => {
-                kakao.maps.load(() => {
+                kako.maps.load(() => {
                     initializeMap();
                 });
             };
-            document.head.appendChild(kakaoSctipt);
+            document.head.appendChild(kakaoScript);
         } 
         function initializeMap() {
             let container = document.getElementById('map');
+            let position = new kakao.maps.LatLng(33.450701, 126.570667);
             let options = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667),
+                center: position,
                 level: 3
             };
             
             let map = new kakao.maps.Map(container, options);
+
+            // 마커생성
+            let marker = new kakao.maps.Marker({
+                map: map,
+                position: posotion              // position  으로 해도 됨
+            });
         };
     </script>
 </head>
