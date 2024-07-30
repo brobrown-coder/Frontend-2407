@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap 5 navbar</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://kit.fontawesome.com/c78c7fcb6c.js" crossorigin="anonymous"></script>
+  <style>
+    * {font-family: 'Noto Sans KR', sans-serif; }
+    a {text-decoration: none; columns: inherit;}
+    th { text-align: center; width: 14.28%; }
+		td { height: 120px; }
+  </style>
+  <script>
+    function twoDigit(num) {        // 숫자 두자리 만드는 함수
+        return num < 10 ? '0' + num : String(num);
+    }
+    function myDate(now) {              // 날짜 출력 함수
+        const week = '일월화수목금토'.split('');
+        return `${now.getFullYear()}-${twoDigit(now.getMonth() + 1)}-${twoDigit(now.getDate())}(${week[now.getDay() % 7]})`;
+    }
+    function myTime(now) {          // 시간 출력함수
+        return `${twoDigit(now.getHours())}:${twoDigit(now.getMinutes())}:${twoDigit(now.getSeconds())}`;
+    }
+    function imgUp(imgId, imgLocation){     // 이미지 매칭 함수
+        document.getElementById(imgId).src = `img/${imgLocation}.gif`;
+    }
+    
+    window.onload = () => {
+        setInterval(() => {
+            let now = new Date();
+            let dateStr = myDate(now);
+            let timeStr = myTime(now);
+
+            imgUp('y1', dateStr[0]);
+            imgUp('y2', dateStr[1]);
+            imgUp('y3', dateStr[2]);
+            imgUp('y4', dateStr[3]);
+            imgUp('mth1', dateStr[5]);
+            imgUp('mth2', dateStr[6]);
+            imgUp('d1', dateStr[8]);
+            imgUp('d2', dateStr[9]);
+            document.getElementById('day').innerHTML = `(${dateStr[11]})`;
+
+            imgUp('h1', timeStr[0]);
+            imgUp('h2', timeStr[1]);
+            imgUp('m1', timeStr[3]);
+            imgUp('m2', timeStr[4]);
+            imgUp('s1', timeStr[6]);
+            imgUp('s2', timeStr[7]);
+
+        }, 1000);
+
+        const kakaoScript = document.createElement('script');
+        kakaoScript.src = `http://dapi.kakao.com/v2/maps/sdk.js?appkey=173315b7a39299e4aebd2ac54d5fe748&autoload=false`;
+        kakaoScript.onload = () => {
+            kakao.maps.load(() => { }); 
+        };
+        document.head.appendChild(kakaoScript);
+
+        let place = '성수동';
+        let roadBaseUrl = ' https://business.juso.go.kr/addrlink/addrLinkApi.do';
+        let kakaoBaseUrl = 'https://dapi.kakao.com/v2/local/search/address.json';
+        let params1 = 'currentPage=1&countPerPage=5';
+        let params2 = `keyword=${encodeURIComponent(place)}`;
+        let params3 = `confmKey=devU01TX0FVVEgyMDI0MDczMDA5NTcxMDExNDk3NDU=&resultType=json`;
+        let roadUrl = `${roadBaseUrl}?${params1}&${params2}&${params3}`;
+
+        fetch(roadUrl)
+            .then(response => response.json())
+            .then(result => {
+                // console.log(result);
+                let roadAddr = result.results.juso[0].roadAddr;
+            
+                let kakaoUrl = `${kakaoBaseUrl}?query=${encodeURIComponent(roadAddr)}`;
+                let header = { Authorization: `KakaoAK e2a7228a868b90543ff75f4a8c343447` };   
+                fetch(kakaoUrl, { headers: header })
+                    .then(response => response.json())
+                    .then(result => {
+                        // console.log(result);
+                        let lat = parseFloat(result.documents[0].y);
+                        let lon = parseFloat(result.documents[0].x);
+
+                        drawMap(place, lat, lon);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    }); 
+            });
+
+          // document.querySelector('p').innerHTML = url;
+      };
+
+      function drawMap(place, lat, lon) {
+          // console.log(place, lat, lon);
+          let container = document.getElementById('map');
+          let position = new kakao.maps.LatLng(lat, lon);
+          let options = { 
+              center: position, 
+              level: 7 
+          };
+          let map = new kakao.maps.Map(container, options); 
+
+          // 마커 생성
+          let marker = new kakao.maps.Marker({
+              map: map,
+              position: position              // position 으로 해도 됨
+          });
+
+          // 인포 윈도우 생성
+          let infowindow = new kakao.maps.InfoWindow({
+              content : `<div>${place}</div>`
+          });
+          // 마우스오버 이벤트, 마우스아웃 이벤트 등록
+          kakao.maps.event.addListener(marker, 'mouseover', () => {
+              infowindow.open(map, marker);
+          });
+          kakao.maps.event.addListener(marker, 'mouseout', () => {
+              infowindow.close();
+          });
+    }
+  </script>
+</head>
+<body style="height: 2200px;">
+  <!-- 네비게이션 영역 -->
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+    <div class="container-fluid">
+      <ul class="navbar-nav">
+        <a class="navbar-brand mx-5" href="#">
+          <img src="img/logo.jpg" alt="" style="height: 36px;">
+        </a>
+        <li class="nav-item">
+          <a class="nav-link ms-3" href="#section1"><i class="fa-solid fa-building"></i> Company</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link ms-3" href="#section2"><i class="fa-solid fa-italic"></i> It's me</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link ms-3" href="#section3"><i class="fa-solid fa-gamepad"></i> I like..</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link ms-3" href="#section4"><i class="fa-solid fa-location-dot"></i> Place</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link ms-3" href="#section5"><i class="fa-solid fa-calendar-days"></i> schedule</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link ms-3"data-bs-toggle="offcanvas" data-bs-target="#contact"><i class="fa-solid fa-wave-square"></i> contact</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link ms-3 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            <i class="fa-solid fa-key"></i> 관리</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Normal</a></li>
+            <li><a class="dropdown-item active" href="#">Active</a></li>
+            <li><a class="dropdown-item disabled" href="#">관리자</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <!-- <span class="navbar-text me-3 p-2">홍길동님 환영합니다</span> -->
+           <p class="navbar-text">Welcome..	&#58;&#41;</p>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link ms-3"><i class="fa-solid fa-right-from-bracket"></i>로그아웃</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- 네비게이션 영역끝 -->
+
+  <!-- time -->
+  <div id="section1" class="container-fluid text-dark" style="padding:100px 20px; height: 1200px; background-color: #ffffff;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="p-5 text-center my-5">
+            <!-- 날짜 -->
+            <img id="y1" style="width: 50px;">
+            <img id="y2" style="width: 50px;">
+            <img id="y3" style="width: 50px;">
+            <img id="y4" style="width: 50px;">
+            <span style="font-size: 40px;">년</span>
+            <img id="mth1" style="width: 50px;">
+            <img id="mth2" style="width: 50px;">
+            <span style="font-size: 40px;">월</span>
+            <img id="d1" style="width: 50px;">
+            <img id="d2" style="width: 50px;">
+            <span style="font-size: 40px;">일</span>
+            <span id="day" style="font-size: 40px;"></span>
+            <hr><br>
+            <!-- 시간 -->
+            <img id="h1" style="width: 50px;">
+            <img id="h2" style="width: 50px;">
+            <img src="img/Colon.jpg" style="width: 50px;"">
+            <img id="m1" style="width: 50px;">
+            <img id="m2" style="width: 50px;">
+            <img src="img/Colon.jpg" style="width: 50px;"">
+            <img id="s1" style="width: 50px;">
+            <img id="s2" style="width: 50px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- It's me -->
+  <div id="section2" class="container-fluid bg-success text-white" style="padding:100px 20px; height: 1200px;">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <div class="row">
+          <h1>It'me</h1>
+          <div class="col">
+            <div class="container">
+              
+
+              <!-- Carousel -->
+              <div id="demo" class="carousel slide mt-5" data-bs-ride="carousel">
+
+                <!-- Indicators/dots -->
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                  <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                  <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                </div>
+                
+                <!-- The slideshow/carousel -->
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="img/pic1.jpg" alt="Los Angeles" class="d-block rounded" style="width:100%">
+                    <div class="carousel-caption">
+                      <h3 style="opacity: 0.5;">Kimjae</h3>
+                      <p style="opacity: 0.5;">We had such a great time in Kimjae!</p>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <img src="img/pic2.jpg" alt="Chicago" class="d-block rounded" style="width:100%">
+                    <div class="carousel-caption">
+                      <h3 style="opacity: 0.5;">Oops! bighead</h3>
+                      <p style="opacity: 0.5;">Sry too big</p>
+                    </div> 
+                  </div>
+                  <div class="carousel-item">
+                    <img src="img/pic3.jpg" alt="New York" class="d-block rounded" style="width:100%">
+                    <div class="carousel-caption">
+                      <h3 style="opacity: 0.5;">Maybe... Busan?</h3>
+                      <p style="opacity: 0.5;">Where are you looking</p>
+                    </div>  
+                  </div>
+                </div>
+                
+                <!-- Left and right controls/icons -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                  <span class="carousel-control-next-icon"></span>
+                </button>
+              </div>
+
+              <div class="container-fluid mt-3">
+                <h3>백승헌 입니다</h3>
+                <p>만나서 반갑습니다</p>
+                <p>87년생 / 서울출생 / 수원거주</p>
+              </div>
+              
+            
+
+            </div>
+          </div>
+          <div class="col">
+            <div class="container mt-5">
+              <h3>출생지역</h3>
+              <div id="map" style="width:400px; height:300px; margin-top: 20px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-2"></div>
+    </div>
+  </div>
+  
+  <!-- I like -->
+  <div id="section3" class="container-fluid bg-primary text-white" style="padding:100px 20px; height: 1400px;">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <div class="row">
+          <h1>I like..</h1>
+          <div class="col">
+            <div class="container mt-5">
+              <div class="card shadow p-4 mb-4 bg-white" style="width: 300px; height: 500px;">
+                <img src="img/steam.jpg" alt="">
+                <div class="card-body">
+                  <h5 class="card-title"><b>Game</b></h5>
+                  <p class="card-text">steam / blizzard</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="container mt-5">
+              <div class="card shadow p-4 mb-4 bg-white" style="width: 300px; height: 500px;">
+                <img src="img/camp.jpg" alt="">
+                <div class="card-body">
+                  <h5 class="card-title"><b>Food</b></h5>
+                  <p class="card-text"> 바베큐 </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="container mt-5">
+              <div class="card shadow p-4 mb-4 bg-white" style="width: 300px; height: 500px;">
+                <img src="img/drive.jpg" alt="">
+                <div class="card-body">
+                  <h5 class="card-title"><b>Driving</b></h5>
+                  <p class="card-text">야간주행 / 빗길주행</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-2"></div>
+    </div>
+  </div>
+
+
+
+  <!--Favourite-->
+  <div id="section4" class="container-fluid bg-warning text-white" style="padding:100px 20px; height: 1400px;">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <div class="row">
+          <div class="col">
+            <div class="text-dark me-5" style="text-align: left;">
+              <h1 class="d-block mb-4">태어난 곳</h1>
+            </div>
+            <table>
+              <tr>
+                <div class="d-flex justify-content-between">
+                  <div style="display: inline;">
+                    <img src="img/seoul.jfif" style="width: 370px; height: 250px;">
+                  </div>
+                  <div class="text-dark ms-5" style="text-align: right;">
+                    <span class="badge bg-danger me-2">Seoul</span><h1 style="display: inline;"><i class="fa-solid fa-s"></i></h1>
+                    <p>1980년대 후반은 한국 사회의 변화와 현대화가 가속화되던 시기였습니다.
+
+                      한국의 대중문화가 성장하기 시작했으며, 서울에서 다양한 문화 행사와 활동이 활발하게 진행되었습니다.
+                      사회 변화: 시민 사회의 활성화와 민주화 요구가 높아지면서, 사회적 인식과 행동에 변화가 일어나기 시작했습니다.
+                      이러한 사건들은 1987년 서울의 중요한 역사적, 사회적, 정치적 맥락을 형성했으며, 현대 한국 사회와 정치의 발전에 큰 영향을 미쳤습니다.
+                    </p>
+                  </div>
+                </div>
+              </tr>
+              <br>
+              <hr class="border border-lg">
+              <div class="text-dark me-5" style="text-align: left; ">
+                <h1 class="d-block mb-4">가보고 싶은 곳</h1>
+              </div>
+              <tr>
+                <div class="d-flex justify-content-between">
+                  <div class="text-dark me-5" style="text-align: left;">
+                    <h1 style="display: inline;"><i class="fa-solid fa-m"></i></h1><span class="badge bg-danger ms-2">Monace</span>
+                    <p>모나코 공국(프랑스어: Principauté de Monaco
+                       프랭시포테 드 모나코[*], 오크어: Principat de Mónegue 프린시파트 데 무네게) 줄여서 모나코
+                       (프랑스어: Monaco 모나코[*])는 서유럽에 있는 작은 공국이다. 이 나라는 도시 국가이며, 유럽과 
+                       세계의 주권 국가 중에서 바티칸 시국에 이어 두 번째로 영토가 좁은 나라이다. 바티칸 시국은 유엔에 
+                       가맹하지 않았으므로, 모나코는 유엔 회원국 가운데 국토 면적이 가장 작다.
+                        </p>
+                  </div>
+                  <div>
+                    <img src="img/monaco.jfif" style="width: 370px; height: 250px;">
+                  </div>
+                </div>
+              </tr>
+            </table>
+          </div>
+        </div>
+        
+      </div>
+      <div class="col-2"></div>
+    </div>
+  </div>
+  
+  
+   <!--캘린더  -->
+      <div id="section5" class="container-fluid bg-light text-dark" style="padding:100px 20px; height: 1200px;">
+      <div class="col">
+        <h3><strong>스케쥴</strong></h3>
+        <hr>
+        <div class="d-flex justify-content-between">
+          <div>2024-07-11(목)</div>
+          <div style="font-size: 1.2rem;">
+            <a href="#"><i class="fa-solid fa-angles-left"></i></a>
+            <a href="#"><i class="fa-solid fa-angle-left ms-2"></i></a>
+            <span class="mx-2">2024.07</span>
+            <a href="#"><i class="fa-solid fa-angles-right"></i></a>
+            <a href="#"><i class="fa-solid fa-angle-right ms-2"></i></a>
+          </div>
+          <div><a href="#"><i class="fa-solid fa-square-plus"></i> 기념일</a></div>
+        </div>
+        <table class="table table-bordered mt-3" data-bs-toggle="modal" data-bs-target="#myModal">
+          <tr class="table-secondary">
+            <th class="text-danger">일</th>
+            <th>월</th><th>화</th><th>수</th><th>목</th><th>금</th>
+            <th class="text-primary">토</th>
+          </tr>
+          <tr>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div class="text-danger" style="opacity: 0.5;"><strong>30</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>1</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>2</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>3</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>4</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>5</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div class="text-primary"><strong>6</strong></div>
+                <div>소서</div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div class="text-danger"><strong>7</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>8</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>9</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>10</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td style="background-color: #efffff;">
+              <div class="d-flex justify-content-between">
+                <div><strong>11</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>12</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div class="text-primary"><strong>13</strong></div>
+                <div></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div class="text-danger"><strong>14</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>15</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>16</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>17</strong></div>
+                <div>제헌절</div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>18</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>19</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div class="text-primary"><strong>20</strong></div>
+                <div></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div class="text-danger"><strong>21</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>22</strong></div>
+                <div>대서</div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>23</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>24</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>25</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>26</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div class="text-primary"><strong>27</strong></div>
+                <div></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div class="text-danger"><strong>28</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>29</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>30</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div><strong>31</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div style="opacity: 0.5;"><strong>1</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div style="opacity: 0.5;"><strong>2</strong></div>
+                <div></div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div class="text-primary" style="opacity: 0.5;"><strong>3</strong></div>
+                <div></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 네비게이션 밑 고정 -->
+  <nav class="navbar navbar-expand-sm bg-dark fixed-bottom">
+      <div class="container-fluid justify-content-center">
+        <span class="navbar-text text-secondary"><i class="fa-brands fa-html5 me-2"></i><i class="fa-brands fa-css3-alt me-2"></i><i class="fa-brands fa-bootstrap me-2"></i>
+          Copyright &copy; 2021-2024 SH World Corp. All right reserved.<i class="fa-brands fa-youtube ms-2"></i><i class="fa-brands fa-battle-net ms-2"></i><i class="fa-brands fa-steam ms-2"></i>
+        </span>
+      </div>
+  </nav>
+  
+  <!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h5 class="modal-title">일정 추가</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form action="/" method="get">
+            <div class="row">
+              <div class="col">
+                <label for="title">제목</label>
+                <input type="checkbox" class="form-check-input ms-5" id="check1" name="check" value="val1" checked>
+                <label for="check1" class="form-check-label">중요</label>
+                <input type="text" class="form-control" list="subtitle" name="title" id="title" required>
+                  <datalist id="subtitle">
+                    <option value="공부"></option>
+                    <option value="식사"></option>
+                    <option value="미팅"></option>
+                    <option value="학회"></option>
+                  </datalist>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-8">
+                <label for="date1">시작일</label>
+                <input type="date" class="form-control" id="date1" value="">
+              </div>
+              <div class="col-4">
+                <label for="time1">시작시간</label>
+                <input type="time" class="form-control" id="time1" value="12:00">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-8">
+                <label for="date2">종료일</label>
+                <input type="date" class="form-control" id="date2" value="2024-07-08">
+              </div>
+              <div class="col-4">
+                <label for="time2">종료시간</label>
+                <input type="time" class="form-control" id="time2" value="13:00">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="pos">장소</label>
+                <input type="text" class="form-control" id="pos" value="집" disabled>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="memo">메모</label>
+                <input type="text" class="form-control" id="memo" value="멘토분들과 식사">
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary me-2" >제출</button>
+          <button type="redet" class="btn btn-secondary" data-bs-dismiss="modal">종료</button>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+  <!-- 모달 끝부분 -->
+
+
+  <!-- offcanvas -->
+  <div class="offcanvas offcanvas-start bg-light" id="contact">
+    <div class="offcanvas-header">
+      <h3 class="offcanvas-title" style="text-decoration: dotted;">Contact Me</h3>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+    <div class="offcanvas-body">
+      <div class="container">
+        <div class="d-flex justify-content-center">
+          <img src="img/avatar_face.jpg" alt="image" class="img-thumbnail mt-3" style="width: 100%;"">
+        </div>
+        <div class="mt-2">
+          <span>오늘의 상태메시지를 이 자리에 적습니다<span class="badge bg-secondary ms-2">수정</span></span>
+        </div>
+        <div class="mt-5">
+          <i class="fa-solid fa-envelope"></i> deon102@naver.com<br>
+          <i class="fa-brands fa-github"></i><a href="https://github.com/brobrown-coder" target="_blank"> 백승헌</a><br>
+          <i class="fa-brands fa-steam"></i><a href="https://store.steampowered.com/" target="_blank"> Steam</a><br>
+          <i class="fa-solid fa-location-dot"></i> 수원시 권선구
+            <a href="#" class="badge bg-secondary">날씨</a><br>
+          <button class="btn btn-outline-primary btn-sm mt-2">Edit Profile</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--슬로건 메모 Crafting AI solutions  -->
+</body>
+</html>

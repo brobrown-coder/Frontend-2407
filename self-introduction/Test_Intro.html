@@ -14,6 +14,116 @@
     th { text-align: center; width: 14.28%; }
 		td { height: 120px; }
   </style>
+  <script src="key.js"></script>
+  <script>
+    function twoDigit(num) {        // 숫자 두자리 만드는 함수
+        return num < 10 ? '0' + num : String(num);
+    }
+    function myDate(now) {              // 날짜 출력 함수
+        const week = '일월화수목금토'.split('');
+        return `${now.getFullYear()}-${twoDigit(now.getMonth() + 1)}-${twoDigit(now.getDate())}(${week[now.getDay() % 7]})`;
+    }
+    function myTime(now) {          // 시간 출력함수
+        return `${twoDigit(now.getHours())}:${twoDigit(now.getMinutes())}:${twoDigit(now.getSeconds())}`;
+    }
+    function imgUp(imgId, imgLocation){     // 이미지 매칭 함수
+        document.getElementById(imgId).src = `img/${imgLocation}.gif`;
+    }
+    
+    window.onload = () => {
+        setInterval(() => {
+            let now = new Date();
+            let dateStr = myDate(now);
+            let timeStr = myTime(now);
+
+            imgUp('y1', dateStr[0]);
+            imgUp('y2', dateStr[1]);
+            imgUp('y3', dateStr[2]);
+            imgUp('y4', dateStr[3]);
+            imgUp('mth1', dateStr[5]);
+            imgUp('mth2', dateStr[6]);
+            imgUp('d1', dateStr[8]);
+            imgUp('d2', dateStr[9]);
+            document.getElementById('day').innerHTML = `(${dateStr[11]})`;
+
+            imgUp('h1', timeStr[0]);
+            imgUp('h2', timeStr[1]);
+            imgUp('m1', timeStr[3]);
+            imgUp('m2', timeStr[4]);
+            imgUp('s1', timeStr[6]);
+            imgUp('s2', timeStr[7]);
+
+        }, 1000);
+
+        const kakaoScript = document.createElement('script');
+        kakaoScript.src = `http://dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoJsKey}&autoload=false`;
+        kakaoScript.onload = () => {
+            kakao.maps.load(() => { }); 
+        };
+        document.head.appendChild(kakaoScript);
+
+        let place = '성수동';
+        let roadBaseUrl = ' https://business.juso.go.kr/addrlink/addrLinkApi.do';
+        let kakaoBaseUrl = 'https://dapi.kakao.com/v2/local/search/address.json';
+        let params1 = 'currentPage=1&countPerPage=5';
+        let params2 = `keyword=${encodeURIComponent(place)}`;
+        let params3 = `confmKey=${roadAddrKey}&resultType=json`;
+        let roadUrl = `${roadBaseUrl}?${params1}&${params2}&${params3}`;
+
+        fetch(roadUrl)
+            .then(response => response.json())
+            .then(result => {
+                // console.log(result);
+                let roadAddr = result.results.juso[0].roadAddr;
+            
+                let kakaoUrl = `${kakaoBaseUrl}?query=${encodeURIComponent(roadAddr)}`;
+                let header = { Authorization: `KakaoAK ${kakaoRestKey}` };   
+                fetch(kakaoUrl, { headers: header })
+                    .then(response => response.json())
+                    .then(result => {
+                        // console.log(result);
+                        let lat = parseFloat(result.documents[0].y);
+                        let lon = parseFloat(result.documents[0].x);
+
+                        drawMap(place, lat, lon);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    }); 
+            });
+
+          // document.querySelector('p').innerHTML = url;
+      };
+
+      function drawMap(place, lat, lon) {
+          // console.log(place, lat, lon);
+          let container = document.getElementById('map');
+          let position = new kakao.maps.LatLng(lat, lon);
+          let options = { 
+              center: position, 
+              level: 7 
+          };
+          let map = new kakao.maps.Map(container, options); 
+
+          // 마커 생성
+          let marker = new kakao.maps.Marker({
+              map: map,
+              position: position              // position 으로 해도 됨
+          });
+
+          // 인포 윈도우 생성
+          let infowindow = new kakao.maps.InfoWindow({
+              content : `<div>${place}</div>`
+          });
+          // 마우스오버 이벤트, 마우스아웃 이벤트 등록
+          kakao.maps.event.addListener(marker, 'mouseover', () => {
+              infowindow.open(map, marker);
+          });
+          kakao.maps.event.addListener(marker, 'mouseout', () => {
+              infowindow.close();
+          });
+    }
+  </script>
 </head>
 <body style="height: 2200px;">
   <!-- 네비게이션 영역 -->
@@ -30,10 +140,10 @@
           <a class="nav-link ms-3" href="#section2"><i class="fa-solid fa-italic"></i> It's me</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link ms-3" href="#section3"><i class="fa-solid fa-gamepad"></i> Hobby</a>
+          <a class="nav-link ms-3" href="#section3"><i class="fa-solid fa-gamepad"></i> I like..</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link ms-3" href="#section4"><i class="fa-solid fa-heart"></i> Favourite</a>
+          <a class="nav-link ms-3" href="#section4"><i class="fa-solid fa-location-dot"></i> Place</a>
         </li>
         <li class="nav-item">
           <a class="nav-link ms-3" href="#section5"><i class="fa-solid fa-calendar-days"></i> schedule</a>
@@ -64,16 +174,35 @@
   </nav>
   <!-- 네비게이션 영역끝 -->
 
-  <!-- company -->
+  <!-- time -->
   <div id="section1" class="container-fluid text-white" style="padding:100px 20px; height: 1200px; background-color: #795548;">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-8">
           <div class="p-5 text-center my-5">
-            <h1><b>My First Bootstrap Page</b></h1>
-            <p>BroBrown</p>
-            <button class="btn btn-primary">Primary</button>
-            <button class="btn btn-success">Success</button>
+            <!-- 날짜 -->
+            <img id="y1" style="width: 50px;">
+            <img id="y2" style="width: 50px;">
+            <img id="y3" style="width: 50px;">
+            <img id="y4" style="width: 50px;">
+            <span style="font-size: 50px;">년</span>
+            <img id="mth1" style="width: 50px;">
+            <img id="mth2" style="width: 50px;">
+            <span style="font-size: 50px;">월</span>
+            <img id="d1" style="width: 50px;">
+            <img id="d2" style="width: 50px;">
+            <span style="font-size: 50px;">일</span>
+            <span id="day" style="font-size: 50px;"></span>
+            <hr><br>
+            <!-- 시간 -->
+            <img id="h1" style="width: 50px;">
+            <img id="h2" style="width: 50px;">
+            <img src="img/Colon.jpg" style="width: 50px;"">
+            <img id="m1" style="width: 50px;">
+            <img id="m2" style="width: 50px;">
+            <img src="img/Colon.jpg" style="width: 50px;"">
+            <img id="s1" style="width: 50px;">
+            <img id="s2" style="width: 50px;">
           </div>
         </div>
       </div>
@@ -138,21 +267,17 @@
               <div class="container-fluid mt-3">
                 <h3>백승헌 입니다</h3>
                 <p>만나서 반갑습니다</p>
-                <p>다같이 좋은 결실을 맺읍시다!!</p>
+                <p>87년생 / 서울출생 / 수원거주</p>
               </div>
               
+            
 
             </div>
           </div>
           <div class="col">
             <div class="container mt-5">
-              <div class="card shadow p-4 mb-4 bg-white" style="width: 400px;">
-                <img src="img/avatar_body.jpg" alt="">
-                <div class="card-body">
-                  <h5 class="card-title"><b>백승헌</b></h5>
-                  <p class="card-text">87년생 / 수원거주 / 본가전주 / 개발경험 무</p>
-                </div>
-              </div>
+              <h3>출생지역</h3>
+              <div id="map" style="width:400px; height:300px; margin-top: 20px;"></div>
             </div>
           </div>
         </div>
@@ -161,13 +286,13 @@
     </div>
   </div>
   
-  <!-- hobby -->
+  <!-- I like -->
   <div id="section3" class="container-fluid bg-primary text-white" style="padding:100px 20px; height: 1400px;">
     <div class="row">
       <div class="col-2"></div>
       <div class="col-8">
         <div class="row">
-          <h1>Hobby</h1>
+          <h1>I like..</h1>
           <div class="col">
             <div class="container mt-5">
               <div class="card shadow p-4 mb-4 bg-white" style="width: 300px; height: 500px;">
@@ -184,8 +309,8 @@
               <div class="card shadow p-4 mb-4 bg-white" style="width: 300px; height: 500px;">
                 <img src="img/camp.jpg" alt="">
                 <div class="card-body">
-                  <h5 class="card-title"><b>Camping</b></h5>
-                  <p class="card-text">차박 / 노지캠핑 </p>
+                  <h5 class="card-title"><b>Food</b></h5>
+                  <p class="card-text"> 바베큐 </p>
                 </div>
               </div>
             </div>
@@ -217,70 +342,50 @@
         <div class="row">
           <div class="col">
             <div class="text-dark me-5" style="text-align: left;">
-              <h1 class="d-block mb-4">Favourite Food</h1>
+              <h1 class="d-block mb-4">태어난 곳</h1>
             </div>
             <table>
               <tr>
                 <div class="d-flex justify-content-between">
-                  <div>
-                    <iframe width="370" height="220" src="https://www.youtube.com/embed/0k0SN1K9-HQ?si=RMUs7dpTJEReYGDy" 
-                    title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
-                    encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross
-                    -origin" allowfullscreen>
-                    </iframe>
+                  <div style="display: inline;">
+                    <img src="img/seoul.jfif" style="width: 370px; height: 250px;">
                   </div>
                   <div class="text-dark ms-5" style="text-align: right;">
-                    <span class="badge bg-danger me-2">seafood</span><h1 style="display: inline;"><i class="fa-solid fa-fish"></i></h1>
-                    <p>해산물문서 디자인에 의미가 있는 글을 담으면 사람들은 양식을 보지 않고 글의 내용에 집중하는 경향이 있다. 
-                      예를 들어 "나무위키의 서버는 파라과이에 있다<b class="text-primary">I love 해산물</b> 대부분의 사람들은 글씨체에 집중하지 않고
-                        글의 내용에 집중하게 될 것이다. 그렇다고 의미 없이 아무런 글자를 무작위로 입력해도 안 된다.
-                        </p>
+                    <span class="badge bg-danger me-2">Seoul</span><h1 style="display: inline;"><i class="fa-solid fa-s"></i></h1>
+                    <p>1980년대 후반은 한국 사회의 변화와 현대화가 가속화되던 시기였습니다.
+
+                      한국의 대중문화가 성장하기 시작했으며, 서울에서 다양한 문화 행사와 활동이 활발하게 진행되었습니다.
+                      사회 변화: 시민 사회의 활성화와 민주화 요구가 높아지면서, 사회적 인식과 행동에 변화가 일어나기 시작했습니다.
+                      이러한 사건들은 1987년 서울의 중요한 역사적, 사회적, 정치적 맥락을 형성했으며, 현대 한국 사회와 정치의 발전에 큰 영향을 미쳤습니다.
+                    </p>
                   </div>
                 </div>
               </tr>
+              <br>
+              <hr class="border border-lg">
+              <div class="text-dark me-5" style="text-align: left; ">
+                <h1 class="d-block mb-4">가보고 싶은 곳</h1>
+              </div>
               <tr>
                 <div class="d-flex justify-content-between">
                   <div class="text-dark me-5" style="text-align: left;">
-                    <h1 style="display: inline;"><i class="fa-solid fa-bread-slice"></i></h1><span class="badge bg-danger ms-2">bread</span>
-                    <p>브레드문서 디자인에 의미가 있는 글을 담으면 사람들은 양식을 보지 않고 글의 내용에 집중하는 경향이 있다. 
-                      예를 들어 "나무위키의 서버는 파라과이에 있다<b class="text-primary">I love 빵</b>대부분의 사람들은 글씨체에 집중하지 않고
-                        글의 내용에 집중하게 될 것이다. 그렇다고 의미 없이 아무런 글자를 무작위로 입력해도 안 된다.
+                    <h1 style="display: inline;"><i class="fa-solid fa-m"></i></h1><span class="badge bg-danger ms-2">Monace</span>
+                    <p>모나코 공국(프랑스어: Principauté de Monaco
+                       프랭시포테 드 모나코[*], 오크어: Principat de Mónegue 프린시파트 데 무네게) 줄여서 모나코
+                       (프랑스어: Monaco 모나코[*])는 서유럽에 있는 작은 공국이다. 이 나라는 도시 국가이며, 유럽과 
+                       세계의 주권 국가 중에서 바티칸 시국에 이어 두 번째로 영토가 좁은 나라이다. 바티칸 시국은 유엔에 
+                       가맹하지 않았으므로, 모나코는 유엔 회원국 가운데 국토 면적이 가장 작다.
                         </p>
                   </div>
                   <div>
-                    <iframe width="370" height="220" src="https://www.youtube.com/embed/uycFqxgewEo?si=Kk7r2A95aV1NrT2n" 
-                    title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
-                    gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                    </iframe>
+                    <img src="img/monaco.jfif" style="width: 370px; height: 250px;">
                   </div>
                 </div>
               </tr>
             </table>
           </div>
         </div>
-        <hr class="border border-lg">
-        <div class="row">
-          <div class="col">
-            <div class="text-dark me-5" style="text-align: left;">
-              <h1>A place to travel</h1>
-            </div>
-            <table>
-              <tr>
-                <td>
-                  <div class="d-flex justify-content-between">
-                    <img src="img/monaco.jfif" alt="" style="height: 130px;"><span class="badge bg-danger">Monaco</span>
-                  </div>
-                </td>
-                <td style="text-align: right;">
-                  <h1 style="display: inline;"></h1>
-                    <p class="text-dark">브레드문서 디자인에 의미가 있는 글을 담으면 사람들은 양식을 보지 않고 글의 내용에 집중하는 경향이 있다. 
-                      예를 들어 "나무위키의 서버는 파라과이에 있다<b class="text-primary">I love Monaco</b>대부분의 사람들은 글씨체에 집중하지 않고
-                      글의 내용에 집중하는 경향이 있다. </p>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
+        
       </div>
       <div class="col-2"></div>
     </div>
