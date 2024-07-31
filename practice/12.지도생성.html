@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>지도생성</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="key.js"></script>
+</head>
+
+<body style="margin: 40px;">
+  <h1>지도 생성</h1>
+  <div id="map" style="width:500px;height:400px;"></div>
+  <script>
+    $.ajax({
+      method: "POST",
+      url: "some.php",
+      data: { name: "John", location: "Boston" }
+    })
+      .done(function (msg) {
+        alert("Data Saved: " + msg);
+      });
+  </script>
+</body>
+
+</html>
